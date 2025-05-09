@@ -38,3 +38,6 @@ def about(request):
 
 def services(request):
     return render(request,"services.html",{})
+
+def login_view(request):
+    return render(request, 'emp/login.html')

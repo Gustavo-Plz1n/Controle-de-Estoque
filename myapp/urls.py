@@ -19,9 +19,12 @@ from .views import *
 import emp.views as fun
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("",fun.emp_home),
+    path("",login_view),
     path("index/",fun.emp_home),
     path("about/",about),
     path("services/",services),
+    path('login/', login_view),
     path("emp/",include('emp.urls'))
 ]
+#user = admin
+#pass = toor@123
