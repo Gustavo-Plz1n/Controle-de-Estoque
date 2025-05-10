@@ -26,7 +26,7 @@ urlpatterns = [
     path("services/",services),
     path('login/', login_view),
     path("emp/",include('emp.urls')),
-    path('emp/', views.bemvindo, name='bemvindo')
+    path('bemvindo/', views.bemvindo, name='bemvindo')
 ]
 #user = admin
 #pass = toor@123

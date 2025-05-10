@@ -69,7 +69,7 @@ def login_view(request):
         if user is not None:
             # Se as credenciais estiverem corretas, faz o login e redireciona
             login(request, user)
-            return redirect('/index/')
+            return redirect('/bemvindo/')
         else:
             # Se as credenciais estiverem incorretas, envia uma mensagem de erro
             messages.error(request, "Usuário ou senha inválidos.")
