@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from .views import *
+from . import views
 import emp.views as fun
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -24,7 +25,8 @@ urlpatterns = [
     path("about/",about),
     path("services/",services),
     path('login/', login_view),
-    path("emp/",include('emp.urls'))
+    path("emp/",include('emp.urls')),
+    path('emp/', views.bemvindo, name='bemvindo')
 ]
 #user = admin
 #pass = toor@123

@@ -48,6 +48,8 @@ def home(request):
     
     # Passando o contexto para o template
     return render(request, "home.html", data)
+def bemvindo(request):
+    return render(request, 'emp/bemvindo.html')
 
 def about(request):
     return render(request, "about.html", {})
