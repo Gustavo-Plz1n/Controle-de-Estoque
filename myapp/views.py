@@ -71,6 +71,8 @@ def login_view(request):
         else:
             # Se as credenciais estiverem incorretas, envia uma mensagem de erro
             messages.error(request, "Usuário ou senha inválidos.")
-            return render(request, 'emp/login.html')
+            return render(request, 'emp/login.html', {'messages': messages.get_messages(request)})  # Passando as mensagens para o template
 
+    # Caso não tenha sido um POST, apenas renderize o formulário sem erro
     return render(request, 'emp/login.html')
+

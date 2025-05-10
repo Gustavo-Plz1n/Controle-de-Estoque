@@ -42,9 +42,11 @@
                   </div>
 
                   <!-- Exibindo a mensagem de erro caso ocorra -->
-                  {% if error %}
+                  {% if messages %}
                     <div class="alert alert-danger" role="alert">
-                      {{ error }}
+                      {% for message in messages %}
+                        {{ message }}
+                      {% endfor %}
                     </div>
                   {% endif %}
   
