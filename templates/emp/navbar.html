@@ -1,22 +1,36 @@
 <nav class="navbar navbar-expand-lg" style="background-color: #00ABB3;">
   <div class="container-fluid">
     {% if request.path != '/login/' and request.path != '/' %}
-      <a class="navbar-brand" href="/emp/">Bem Vindo</a>
+      <a class="navbar-brand" href="/bemvindo/">Bem Vindo</a>
     {% endif %}
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
+    
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <!-- Menu principal à esquerda -->
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         {% if request.path != '/login/' and request.path != '/' %}
           <li class="nav-item">
             <a class="nav-link" href="/emp/add-emp/">Cadastrar Produto</a>
           </li>
-          <li><a class="nav-link" href="/emp/home/">Informaçoes do Estoque</a></li>
-           </li>
-          <li><a class="nav-link" href="/emp/buscar-produto">Buscar Produtos</a></li>
+          <li class="nav-item">
+            <a class="nav-link" href="/emp/home/">Informações do Estoque</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/emp/buscar-produto">Buscar Produtos</a>
+          </li>
         {% endif %}
       </ul>
+
+      <!-- Logout à direita -->
+     {% if request.user.is_authenticated and request.path != '/login/' and request.path != '/' %}
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link text-danger fw-bold" href="/login">Logout</a>
+          </li>
+        </ul>
+      {% endif %}
     </div>
   </div>
 </nav>
