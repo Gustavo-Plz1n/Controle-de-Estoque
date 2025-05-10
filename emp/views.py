@@ -7,6 +7,9 @@ def emp_home(request):
     emps=Emp.objects.all()
     return render(request,"emp/home.html",{'emps':emps})
 
+def emp_busca(request):
+    emps=Emp.objects.all()
+    return render(request,"emp/busca_Produtos.html",{'emps':emps})
 
 def add_emp(request):
     if request.method=="POST":
