@@ -1,5 +1,6 @@
-from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login
+from django.contrib import messages
 import datetime
 
 def home(request):
@@ -55,4 +56,21 @@ def services(request):
     return render(request, "services.html", {})
 
 def login_view(request):
+    if request.method == 'POST':
+        # Obtendo dados do formulário de login
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        # Verificando se os dados estão corretos com o método authenticate
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            # Se as credenciais estiverem corretas, faz o login e redireciona
+            login(request, user)
+            return redirect('/index/')
+        else:
+            # Se as credenciais estiverem incorretas, envia uma mensagem de erro
+            messages.error(request, "Usuário ou senha inválidos.")
+            return render(request, 'emp/login.html')
+
     return render(request, 'emp/login.html')
