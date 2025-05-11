@@ -2,6 +2,9 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
 import datetime
+from django.contrib.auth.decorators import login_required
+
+
 # from .models import Produto   # descomente se já houver o modelo
 
 # -------------------------------
@@ -34,15 +37,15 @@ def home(request):
     }
     return render(request, 'home.html', data)
 
-
+@login_required
 def bemvindo(request):
     return render(request, 'emp/bemvindo.html')
 
-
+@login_required
 def about(request):
     return render(request, 'about.html')
 
-
+@login_required
 def services(request):
     return render(request, 'services.html')
 
@@ -51,6 +54,7 @@ def services(request):
 # CRUD de Produto
 # -------------------------------
 
+@login_required
 def add_produto(request):
     if request.method == 'POST':
         # salvar produto novo ou adicionar quantidade…

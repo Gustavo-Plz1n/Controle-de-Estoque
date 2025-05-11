@@ -22,7 +22,6 @@ import emp.views as fun
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("",login_view),
-    path("index/",fun.emp_home),
     path("about/",about),
     path("services/",services),
     path('login/', login_view),

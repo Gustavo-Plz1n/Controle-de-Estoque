@@ -5,20 +5,22 @@ from django.contrib import messages
 from . import models
 from decimal import Decimal, InvalidOperation
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
 
 
+@login_required
 def emp_home(request):
     emps=Emp.objects.all()
     return render(request,"emp/home.html",{'emps':emps})
-
+@login_required
 def getProd(request):
     produtos = models.Produto.objects.all()
     return render(request, "emp/allProd.html", {'produtos': produtos})
-
+@login_required
 def emp_busca(request):
     emps=Emp.objects.all()
     return render(request,"emp/busca_Produtos.html",{'emps':emps})
-
+@login_required
 def add_emp(request):
     if request.method=="POST":
         emp_name=request.POST.get("emp_name")
@@ -41,7 +43,7 @@ def add_emp(request):
         return redirect("/emp/home/")
     return render(request,"emp/add_emp.html",{})
 
-
+@login_required
 def add_produto(request):
     if request.method == "POST":
         tipo = request.POST.get("tipo_produto")
@@ -103,7 +105,7 @@ def add_produto(request):
                 messages.error(request, "Quantidade deve ser um número inteiro válido.")
 
     return render(request, "emp/add_produto.html")
-
+@login_required
 def update_produto(request, produto_id):
     produto = get_object_or_404(models.Produto, pk=produto_id)
 
@@ -130,7 +132,7 @@ def update_produto(request, produto_id):
             messages.error(request, f"Ocorreu um erro ao atualizar o produto: {str(e)}")
 
     return render(request, "emp/update_produto.html", {"produto": produto})
-
+@login_required
 def delete_produto(request, produto_id):
     try:
         produto = models.Produto.objects.get(pk=produto_id)
@@ -140,19 +142,19 @@ def delete_produto(request, produto_id):
         messages.error(request, "Produto não encontrado.")
     return redirect("/emp/check-prod/")
 
-
+@login_required
 def delete_emp(request,emp_id):
     emp=Emp.objects.get(pk=emp_id)
     emp.delete()
     return redirect("/emp/home/")
-
+@login_required
 def update_emp(request,emp_id):
     emp=Emp.objects.get(pk=emp_id)
     print("Yes Bhai")
     return render(request,"emp/update_emp.html",{
         'emp':emp
     })
-
+@login_required
 def do_update_emp(request,emp_id):
     if request.method=="POST":
         emp_name=request.POST.get("emp_name")
@@ -176,7 +178,7 @@ def do_update_emp(request,emp_id):
         e.save()
     return redirect("/emp/home/")
 
-
+@login_required
 def buscar_produto_view(request):
     if request.method == 'POST':
         query = request.POST.get('query', '').strip()
