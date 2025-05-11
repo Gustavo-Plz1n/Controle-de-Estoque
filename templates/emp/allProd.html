@@ -8,6 +8,17 @@
   </head>
   <body>
     {% include 'emp/navbar.html' %}
+    
+    <!-- Exibição das mensagens -->
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+        </div>
+      {% endfor %}
+    {% endif %}
+    
     <h1 class="text-center my-3">Produtos</h1>
     <div class="container">
       <div class="row">

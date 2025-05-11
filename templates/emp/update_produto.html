@@ -15,6 +15,17 @@
         <div class="col-md-6 offset-md-3">
           <div class="card bg-dark text-white">
             <div class="card-body">
+
+              <!-- Mensagens de sucesso, erro, etc. -->
+              {% if messages %}
+                {% for message in messages %}
+                  <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+                {% endfor %}
+              {% endif %}
+
               <form action="" method="POST">
                 {% csrf_token %}
 

@@ -1,80 +1,103 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
 import datetime
+# from .models import Produto   # descomente se já houver o modelo
+
+# -------------------------------
+# Páginas genéricas / exemplo
+# -------------------------------
 
 def home(request):
-    # Definindo a variável isActive inicialmente como True
+    # Flag de exibição
     isActive = True
-    
-    # Verificando se a requisição é POST e processando a variável 'check'
-    if request.method == 'POST':
-        check = request.POST.get("check")
-        print(check)  
-        
-        # Alterando isActive com base no valor de 'check'
-        if check is None:
-            isActive = False
-        else:
-            isActive = True
 
-    # Obtendo a data e hora atual
-    date = datetime.datetime.now()  
-    
-    # Definindo algumas variáveis para o template
-    name = "LearnCodeWithDurgesh"
-    
-    list_of_programs = [
-        'WAP to check even or odd',
-        'WAP to check prime number',
-        'WAP to print all prime numbers from 1 to 100',
-        'WAP to print Pascal\'s triangle'
-    ]
-    
-    student = {
-        'student_name': "Rahul",
-        'student_college': "ZYZ",
-        'student_city': 'LUCKNOW'
-    }
-    
-    # Preparando o contexto a ser passado para o template
+    if request.method == 'POST':
+        check = request.POST.get('check')
+        isActive = bool(check)
+
     data = {
-        'date': date,
+        'date': datetime.datetime.now(),
         'isActive': isActive,
-        'name': name,
-        'list_of_programs': list_of_programs,
-        'student_data': student
+        'name': 'LearnCodeWithDurgesh',
+        'list_of_programs': [
+            'WAP to check even or odd',
+            'WAP to check prime number',
+            'WAP to print all prime numbers from 1 to 100',
+            'WAP to print Pascal\'s triangle',
+        ],
+        'student_data': {
+            'student_name': 'Rahul',
+            'student_college': 'ZYZ',
+            'student_city': 'LUCKNOW',
+        },
     }
-    
-    # Passando o contexto para o template
-    return render(request, "home.html", data)
+    return render(request, 'home.html', data)
+
+
 def bemvindo(request):
     return render(request, 'emp/bemvindo.html')
 
+
 def about(request):
-    return render(request, "about.html", {})
+    return render(request, 'about.html')
+
 
 def services(request):
-    return render(request, "services.html", {})
+    return render(request, 'services.html')
+
+
+# -------------------------------
+# CRUD de Produto
+# -------------------------------
+
+def add_produto(request):
+    if request.method == 'POST':
+        # salvar produto novo ou adicionar quantidade…
+        messages.success(request, 'Produto cadastrado com sucesso!')
+        return redirect('add_produto')          # nome da URL de cadastro
+    return render(request, 'emp/add_produto.html')
+
+
+def update_produto(request, produto_id):
+    """
+    Atualiza um produto existente.
+    Após atualização, redireciona para 'allprod' com mensagem.
+    """
+    produto = get_object_or_404(Produto, id=produto_id)
+
+    if request.method == 'POST':
+        produto.nome            = request.POST.get('nome')
+        produto.descricao       = request.POST.get('descricao')
+        produto.estoque         = request.POST.get('estoque')
+        produto.preco_aquisicao = request.POST.get('preco_aquisicao')
+        produto.preco           = request.POST.get('preco')
+        produto.fornecedor      = request.POST.get('fornecedor')
+        produto.save()
+
+        messages.success(request, 'Produto atualizado com sucesso!')
+        return redirect('allprod')
+
+    return render(request, 'emp/update_produto.html', {'produto': produto})
+
+
+# -------------------------------
+# Autenticação
+# -------------------------------
 
 def login_view(request):
     if request.method == 'POST':
-        # Obtendo dados do formulário de login
         username = request.POST.get('username')
         password = request.POST.get('password')
 
-        # Verificando se os dados estão corretos com o método authenticate
         user = authenticate(request, username=username, password=password)
 
         if user is not None:
-            # Se as credenciais estiverem corretas, faz o login e redireciona
             login(request, user)
             return redirect('/bemvindo/')
         else:
-            # Se as credenciais estiverem incorretas, envia uma mensagem de erro
-            messages.error(request, "Usuário ou senha inválidos.")
-            return render(request, 'emp/login.html', {'messages': messages.get_messages(request)})  # Passando as mensagens para o template
+            messages.error(request, 'Usuário ou senha inválidos.')
+            # Basta renderizar — o bloco {% if messages %} do template cuida da exibição
+            return render(request, 'emp/login.html')
 
-    # Caso não tenha sido um POST, apenas renderize o formulário sem erro
     return render(request, 'emp/login.html')
-
