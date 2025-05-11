@@ -12,19 +12,19 @@
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         {% if request.path != '/login/' and request.path != '/' %}
           <li class="nav-item">
-            <a class="nav-link" href="/emp/check-prod/">Informações do Estoque</a>
+            <a class="nav-link {% if request.path == '/emp/check-prod/' %}active fw-bold text-white{% endif %}" href="/emp/check-prod/">Informações do Estoque</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/emp/buscar-produto/">Buscar Produtos</a>
+            <a class="nav-link {% if request.path == '/emp/buscar-produto/' %}active fw-bold text-white{% endif %}" href="/emp/buscar-produto/">Buscar Produtos</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/emp/add-prod/">Cadastrar Produtos</a>
+            <a class="nav-link {% if request.path == '/emp/add-prod/' %}active fw-bold text-white{% endif %}" href="/emp/add-prod/">Cadastrar Produtos</a>
           </li>
         {% endif %}
       </ul>
 
       <!-- Logout à direita -->
-     {% if request.user.is_authenticated and request.path != '/login/' and request.path != '/' %}
+      {% if request.user.is_authenticated and request.path != '/login/' and request.path != '/' %}
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
           <li class="nav-item">
             <a class="nav-link text-danger fw-bold" href="/login">Logout</a>
