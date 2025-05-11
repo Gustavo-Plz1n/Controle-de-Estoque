@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Atualizar Produto</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  </head>
+  <body>
+    {% include 'emp/navbar.html' %}
+    <h1 class="text-center my-3">Atualizar Produto</h1>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 offset-md-3">
+          <div class="card bg-dark text-white">
+            <div class="card-body">
+              <form action="" method="POST">
+                {% csrf_token %}
+
+                <div class="mb-3">
+                  <label for="nome" class="form-label">Nome do Produto</label>
+                  <input id="nome" name="nome" type="text" class="form-control" value="{{ produto.nome }}" required>
+                </div>
+
+                <div class="mb-3">
+                  <label for="descricao" class="form-label">Descrição</label>
+                  <textarea id="descricao" name="descricao" class="form-control" rows="3">{{ produto.descricao }}</textarea>
+                </div>
+
+                <div class="mb-3">
+                  <label for="estoque" class="form-label">Quantidade em Estoque</label>
+                  <input id="estoque" name="estoque" type="number" class="form-control" min="0" value="{{ produto.estoque }}" required>
+                </div>
+
+                <div class="mb-3">
+                  <label for="preco_aquisicao" class="form-label">Preço de Aquisição (por unidade)</label>
+                  <input id="preco_aquisicao" name="preco_aquisicao" type="number" step="0.01" class="form-control" value="{{ produto.preco_aquisicao }}" required>
+                </div>
+
+                <div class="mb-3">
+                  <label for="preco" class="form-label">Preço de Venda (por unidade)</label>
+                  <input id="preco" name="preco" type="number" step="0.01" class="form-control" value="{{ produto.preco }}" required>
+                </div>
+
+                <div class="mb-3">
+                  <label for="fornecedor" class="form-label">Fornecedor</label>
+                  <input id="fornecedor" name="fornecedor" type="text" class="form-control" value="{{ produto.fornecedor }}">
+                </div>
+
+                <div class="text-center mt-4">
+                  <button type="submit" class="btn btn-success">Atualizar Produto</button>
+                </div>
+
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

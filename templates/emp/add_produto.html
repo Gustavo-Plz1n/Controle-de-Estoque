@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cadastro de Produto</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+      .hidden { display: none; }
+    </style>
+  </head>
+  <body>
+    {% include 'emp/navbar.html' %}
+    <h1 class="text-center my-3">Cadastro de Produto</h1>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 offset-md-3">
+          <div class="card bg-dark text-white">
+            <div class="card-body">
+              <form action="/emp/add-prod/" method="POST">
+                {% csrf_token %}
+
+                <!-- Seletor de tipo de produto -->
+                <div class="mb-3">
+                  <label for="tipo_produto" class="form-label">Tipo de Cadastro</label>
+                  <select name="tipo_produto" id="tipo_produto" class="form-control" required onchange="toggleCampos()">
+                    <option value="" selected disabled>Selecione uma opção</option>
+                    <option value="novo">Produto Novo</option>
+                    <option value="existente">Produto Existente</option>
+                  </select>
+                </div>
+
+                <!-- Campos para Produto Novo -->
+                <div id="campos_novo" class="hidden">
+                  <div class="mb-3">
+                    <label for="nome" class="form-label">Nome do Produto</label>
+                    <input id="nome" name="nome" type="text" class="form-control" placeholder="Nome do produto" />
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="descricao" class="form-label">Descrição</label>
+                    <textarea name="descricao" id="descricao" rows="3" class="form-control" placeholder="Descrição do produto"></textarea>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="quantidade_novo" class="form-label">Quantidade</label>
+                    <input id="quantidade_novo" name="quantidade" type="number" class="form-control" min="0" placeholder="Quantidade inicial" />
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="preco_aquisicao" class="form-label">Preço de Aquisição (por unidade)</label>
+                    <input id="preco_aquisicao" name="preco_aquisicao" type="number" step="0.01" class="form-control" placeholder="R$ 0,00" />
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="preco_venda" class="form-label">Preço de Venda (por unidade)</label>
+                    <input id="preco_venda" name="preco_venda" type="number" step="0.01" class="form-control" placeholder="R$ 0,00" />
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="fornecedor" class="form-label">Fornecedor</label>
+                    <input id="fornecedor" name="fornecedor" type="text" class="form-control" placeholder="Nome do fornecedor" />
+                  </div>
+                </div>
+
+                <!-- Campos para Produto Existente -->
+                <div id="campos_existente" class="hidden">
+                  <div class="mb-3">
+                    <label for="nome_existente" class="form-label">Nome do Produto</label>
+                    <input id="nome_existente" name="nome_existente" type="text" class="form-control" placeholder="Nome do produto existente" />
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="quantidade_existente" class="form-label">Quantidade a adicionar</label>
+                    <input id="quantidade_existente" name="quantidade_existente" type="number" class="form-control" min="1" placeholder="Quantidade" />
+                  </div>
+                </div>
+
+                <div class="text-center mt-4">
+                  <button type="submit" class="btn btn-primary">Salvar Produto</button>
+                </div>
+
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function toggleCampos() {
+        const tipo = document.getElementById("tipo_produto").value;
+        document.getElementById("campos_novo").classList.add("hidden");
+        document.getElementById("campos_existente").classList.add("hidden");
+
+        if (tipo === "novo") {
+          document.getElementById("campos_novo").classList.remove("hidden");
+        } else if (tipo === "existente") {
+          document.getElementById("campos_existente").classList.remove("hidden");
+        }
+      }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
